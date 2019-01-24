@@ -45,6 +45,7 @@ static NSString *const ZHRichEmotion = @"ZHRichEmotion";
  @return 富文本
  */
 - (NSAttributedString *)attributedStringWithString:(NSString *)string;
-
+///把富文本转换为普通文字
+- (NSString *)stringWithAttributedString:(NSAttributedString *)attributedString;
 @end
 

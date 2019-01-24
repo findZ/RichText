@@ -24,6 +24,7 @@
 		29A0777821F85ED700ADDBE7 /* ZHRichTextParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 29A0777721F85ED700ADDBE7 /* ZHRichTextParser.m */; };
 		29A0777B21F86A2600ADDBE7 /* ZHEmotionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 29A0777A21F86A2600ADDBE7 /* ZHEmotionTool.m */; };
 		29A0778021F9532500ADDBE7 /* ZHEmotions.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 29A0777F21F9532500ADDBE7 /* ZHEmotions.bundle */; };
+		29A0778621F9AA3500ADDBE7 /* ZHTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 29A0778521F9AA3500ADDBE7 /* ZHTextView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,8 @@
 		29A0777921F86A2600ADDBE7 /* ZHEmotionTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHEmotionTool.h; sourceTree = "<group>"; };
 		29A0777A21F86A2600ADDBE7 /* ZHEmotionTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHEmotionTool.m; sourceTree = "<group>"; };
 		29A0777F21F9532500ADDBE7 /* ZHEmotions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZHEmotions.bundle; sourceTree = "<group>"; };
+		29A0778421F9AA3500ADDBE7 /* ZHTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHTextView.h; sourceTree = "<group>"; };
+		29A0778521F9AA3500ADDBE7 /* ZHTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHTextView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +172,8 @@
 				29A0777021F8585B00ADDBE7 /* ZHAttachmentView.m */,
 				29A0776221F853F500ADDBE7 /* ZHRichView.h */,
 				29A0776321F853F500ADDBE7 /* ZHRichView.m */,
+				29A0778421F9AA3500ADDBE7 /* ZHTextView.h */,
+				29A0778521F9AA3500ADDBE7 /* ZHTextView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -340,6 +345,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				29A0773421F851BE00ADDBE7 /* ViewController.m in Sources */,
+				29A0778621F9AA3500ADDBE7 /* ZHTextView.m in Sources */,
 				29A0777821F85ED700ADDBE7 /* ZHRichTextParser.m in Sources */,
 				29A0776821F854F400ADDBE7 /* ZHRichLink.m in Sources */,
 				29A0777B21F86A2600ADDBE7 /* ZHEmotionTool.m in Sources */,

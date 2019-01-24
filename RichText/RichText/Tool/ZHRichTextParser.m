@@ -10,6 +10,7 @@
 #import "ZHRegexResult.h"
 #import "ZHEmotionTool.h"
 #import "ZHTextAttachment.h"
+#import "ZHEmotion.h"
 
 @implementation ZHRichTextParser
 #pragma mark - geter
@@ -216,5 +217,26 @@
     }];
     
     return attributedString;
+}
+
+- (NSString *)stringWithAttributedString:(NSAttributedString *)attributedString
+{
+    NSMutableString *string = [[NSMutableString alloc] init];
+    
+    NSRange range = NSMakeRange(0, attributedString.length);
+    [attributedString enumerateAttributesInRange:range options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
+        if (attrs[@"NSAttachment"]) {
+            ZHTextAttachment *attachment = attrs[@"NSAttachment"];
+            if ([attachment isKindOfClass:[ZHTextAttachment class]]) {
+                [string appendString:attachment.emotion.chs];
+            }
+        }else{
+            NSAttributedString *subAttributedString = [attributedString attributedSubstringFromRange:range];
+            [string appendString:subAttributedString.string];
+            
+        }
+    }];
+    
+    return string;
 }
 @end
