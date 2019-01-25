@@ -45,6 +45,14 @@ static NSString *const ZHRichEmotion = @"ZHRichEmotion";
  @return 富文本
  */
 - (NSAttributedString *)attributedStringWithString:(NSString *)string;
+
+/**
+ 将输入通过键盘输入的文本转换为富文本（包含自定义表情的输入内容）
+
+ @param inputString 输入的文本
+ @return 富文本
+ */
+- (NSAttributedString *)attributedStringWithInputString:(NSString *)inputString;
 ///把富文本转换为普通文字
 - (NSString *)stringWithAttributedString:(NSAttributedString *)attributedString;
 @end

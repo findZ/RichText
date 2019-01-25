@@ -150,6 +150,31 @@
     
     return regexResults;
 }
+///排序富文本
+- (NSAttributedString *)sortAttributedString:(NSAttributedString *)attributedString
+{
+    NSMutableAttributedString *newAttributedString = [[NSMutableAttributedString alloc] init];
+    NSRange range = NSMakeRange(0, attributedString.length);
+    [attributedString enumerateAttributesInRange:range options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
+        if (attrs[ZHRichEmotion])
+        {//拼接自定义表情
+            ZHTextAttachment *attachment = [[ZHTextAttachment alloc] init];
+            ZHRegexResult *result = attrs[ZHRichEmotion];
+            NSString *desc = result.string;
+            attachment.emotion = [ZHEmotionTool emotionWithDesc:desc];
+            attachment.bounds = CGRectMake(0, self.font.descender, self.font.lineHeight, self.font.lineHeight);
+            //将附件包装成富文本
+            NSAttributedString *attachString = [NSAttributedString attributedStringWithAttachment:attachment];
+            [newAttributedString appendAttributedString:attachString];
+        }else{//拼接文本
+            NSAttributedString *attachString = [attributedString attributedSubstringFromRange:range];
+            [newAttributedString appendAttributedString:attachString];
+        }
+    }];
+    
+    return newAttributedString;
+}
+
 #pragma mark - 对外方法
 - (NSAttributedString *)attributedStringWithString:(NSString *)string
 {
@@ -197,25 +222,30 @@
         
     }];
     
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] init];
+    NSAttributedString *attributedString = [self sortAttributedString:attributedText];
     
-    [attributedText enumerateAttributesInRange:range options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
-        if (attrs[ZHRichEmotion])
-        {
-            ZHTextAttachment *attachment = [[ZHTextAttachment alloc] init];
-            ZHRegexResult *result = attrs[ZHRichEmotion];
-            NSString *desc = result.string;
-            attachment.emotion = [ZHEmotionTool emotionWithDesc:desc];
-            attachment.bounds = CGRectMake(0, self.font.descender, self.font.lineHeight, self.font.lineHeight);
-            //将附件包装成富文本
-            NSAttributedString *attachString = [NSAttributedString attributedStringWithAttachment:attachment];
-            [attributedString appendAttributedString:attachString];
-        }else{
-            NSAttributedString *attachString = [attributedText attributedSubstringFromRange:range];
-            [attributedString appendAttributedString:attachString];
+    return attributedString;
+}
+- (NSAttributedString *)attributedStringWithInputString:(NSString *)inputString
+{
+    //1、匹配表情
+    NSArray *emotionArray = [self regexResultEmotion:inputString];
+    
+    //2、根据匹配结果，拼接对应表情
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:inputString];
+    NSRange range = NSMakeRange(0, attributedText.length);
+    [attributedText addAttribute:NSForegroundColorAttributeName value:self.defaultColor range:range];
+    [attributedText addAttribute:NSFontAttributeName value:self.font range:range];
+    
+    [emotionArray enumerateObjectsUsingBlock:^(ZHRegexResult *result, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (result.type == ZHRegexResultTypeEmotion) {
+            if ([ZHEmotionTool emotionWithDesc:result.string]) {
+                [attributedText addAttribute:ZHRichEmotion value:result range:result.range];
+            }
         }
     }];
-    
+    NSAttributedString *attributedString = [self sortAttributedString:attributedText];
+
     return attributedString;
 }
 

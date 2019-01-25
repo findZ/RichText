@@ -33,7 +33,7 @@
         self.layer.cornerRadius = 5.0f;
         self.returnKeyType = UIReturnKeySend;
         self.enablesReturnKeyAutomatically = YES;
-        self.backgroundColor = [UIColor grayColor];
+        self.backgroundColor = [UIColor lightGrayColor];
         self.delegate = self;
         self.plainString = @"";
         
@@ -119,7 +119,7 @@
             NSString *string = [self.textParser stringWithAttributedString:newAttributedText];
             self.plainString = string;
         }
-        self.attributedText = [self.textParser attributedStringWithString:self.plainString];
+        self.attributedText = [self.textParser attributedStringWithInputString:self.plainString];
     }
     
 }
@@ -174,7 +174,7 @@
         self.plainString = [self.plainString stringByAppendingString:emoticon];;
         NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedText];
         
-        NSAttributedString *subAttributedText = [self.textParser attributedStringWithString:emoticon];
+        NSAttributedString *subAttributedText = [self.textParser attributedStringWithInputString:emoticon];
         NSRange range = self.selectedRange;
         
         [attributedText insertAttributedString:subAttributedText atIndex:range.location];
