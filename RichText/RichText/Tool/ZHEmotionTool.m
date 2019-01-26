@@ -10,15 +10,23 @@
 #import "ZHEmotion.h"
 
 #define  ZHBundleName(name) [NSString stringWithFormat:@"ZHEmotions.bundle/%@",name]
-/** 默认表情 */
-static NSArray *_defaultEmotions;
+
+static ZHEmotionTool *_emotionTool;
 
 @implementation ZHEmotionTool
-#pragma mark - 懒加载
-/** 默认表情 */
-+ (NSArray *)defaultEmotions
++ (ZHEmotionTool *)sharedEmotionTool
 {
-    if (_defaultEmotions == nil) {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _emotionTool = [[self alloc] init];
+    });
+    return _emotionTool;
+}
+
+#pragma mark - 懒加载
+- (NSArray *)defaultEmotions
+{
+    if (!_defaultEmotions) {
         
         NSString *plist = [[NSBundle bundleForClass:self.class] pathForResource:ZHBundleName(@"ZHEmotions") ofType:@"plist"];
         NSArray *souresArray = [NSArray arrayWithContentsOfFile:plist];
@@ -33,6 +41,7 @@ static NSArray *_defaultEmotions;
     }
     return _defaultEmotions;
 }
+
 /**
  *  根据表情的文字描述找出对应的表情对象
  */
@@ -43,7 +52,7 @@ static NSArray *_defaultEmotions;
     __block ZHEmotion *foundEmotion = nil;
     
     //从默认表情中查找
-    [[self defaultEmotions] enumerateObjectsUsingBlock:^(ZHEmotion *emotion, NSUInteger idx, BOOL *stop) {
+    [[self sharedEmotionTool].defaultEmotions enumerateObjectsUsingBlock:^(ZHEmotion *emotion, NSUInteger idx, BOOL *stop) {
         if ([desc isEqualToString:emotion.chs] || [desc isEqualToString:emotion.cht]) {
             foundEmotion = emotion;
             //停止遍历

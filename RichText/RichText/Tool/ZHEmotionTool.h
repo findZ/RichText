@@ -11,9 +11,9 @@
 @class ZHEmotion;
 
 @interface ZHEmotionTool : NSObject
+@property(class, nonatomic, readonly) ZHEmotionTool *sharedEmotionTool;
+@property (nonatomic,strong) NSArray *defaultEmotions;
 
-/** 默认表情 */
-+ (NSArray *)defaultEmotions;
 /**
  根据表情的文字描述找出对应的表情对象
 

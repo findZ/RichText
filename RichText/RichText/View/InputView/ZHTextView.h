@@ -10,6 +10,13 @@
 
 @class ZHTextView;
 
+
+typedef NS_OPTIONS(NSInteger, ZHKeyboardType){
+    ZHKeyboardTypeDefualt,  //默认系统键盘
+    ZHKeyboardTypeFace,     //表情键盘
+};
+
+
 @protocol ZHTextViewDelegate <NSObject>
 
 @optional
@@ -17,11 +24,20 @@
 - (BOOL)textView:(ZHTextView *)textView sendText:(NSString *)text;
 - (void)textView:(ZHTextView *)textView changeText:(NSString *)text;
 - (BOOL)textViewShouldBeginEditing;
+- (void)textViewDidEndEditing:(ZHTextView *)textView;
 @end
 
 @interface ZHTextView : UITextView
 @property (nonatomic, weak) id<ZHTextViewDelegate> customDelegate;
+///自定义键盘
+@property (nonatomic,strong) UIView *customKeyboardView;
 
+/**
+ 切换键盘
+
+ @param keyboardType 键盘类型
+ */
+- (void)switchKeyboard:(ZHKeyboardType)keyboardType;
 /**
  拼接表情
  
