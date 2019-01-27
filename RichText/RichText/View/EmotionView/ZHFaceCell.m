@@ -24,7 +24,7 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        self.backgroundColor = [UIColor purpleColor];
+//        self.backgroundColor = [UIColor purpleColor];
         [self setupView];
     }
     return self;
@@ -44,7 +44,7 @@
         UIButton *faceBtn = [[UIButton alloc] initWithFrame:CGRectMake(x, y, btnWidth, btnHeight)];
         faceBtn.hidden = YES;
         faceBtn.tag = i;
-        faceBtn.backgroundColor = [UIColor redColor];
+//        faceBtn.backgroundColor = [UIColor redColor];
 //        [faceBtn setTitle:[NSString stringWithFormat:@"%ld",(long)i] forState:UIControlStateNormal];
          [faceBtn addTarget:self action:@selector(faceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:faceBtn];
