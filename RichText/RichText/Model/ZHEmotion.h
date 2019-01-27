@@ -7,8 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
+
+typedef NS_OPTIONS(NSUInteger, ZHEmotionType) {
+    ZHEmotionTypeFace = 0,//表情
+    ZHEmotionTypeDelete,//删除按钮
+};
 
 @interface ZHEmotion : NSObject
 /**表情的简体文字描述*/
@@ -25,6 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**表情存放的路径*/
 @property (nonatomic,copy) NSString *directory;
+/**表情图片*/
+@property (nonatomic,strong) UIImage *image;
+/**类型*/
+@property (nonatomic,assign) ZHEmotionType type;
 @end
 
 NS_ASSUME_NONNULL_END

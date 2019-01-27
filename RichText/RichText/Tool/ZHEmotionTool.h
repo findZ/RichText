@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @class ZHEmotion;
 
@@ -21,6 +22,7 @@
  @return 表情对象
  */
 + (ZHEmotion *)emotionWithDesc:(NSString *)desc;
++ (UIImage *)animatedGIFWithName:(NSString *)name;
 @end
 
 

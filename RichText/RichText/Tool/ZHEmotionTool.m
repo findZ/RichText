@@ -8,6 +8,7 @@
 
 #import "ZHEmotionTool.h"
 #import "ZHEmotion.h"
+#import <ImageIO/ImageIO.h>
 
 #define  ZHBundleName(name) [NSString stringWithFormat:@"ZHEmotions.bundle/%@",name]
 
@@ -35,6 +36,7 @@ static ZHEmotionTool *_emotionTool;
             ZHEmotion *emotion = [[ZHEmotion alloc] init];
             [emotion setValuesForKeysWithDictionary:dict];
             emotion.directory = ZHBundleName(emotion.png);
+            emotion.image = [UIImage imageNamed:emotion.directory];
             [array addObject:emotion];
         }
         _defaultEmotions = array;
@@ -61,6 +63,43 @@ static ZHEmotionTool *_emotionTool;
     }];
     
     return foundEmotion;
-    
 }
+
++ (UIImage *)animatedGIFWithName:(NSString *)name;
+{
+    //1.加载Gif图片，转换成Data类型
+    NSString *str = [NSString stringWithFormat:@"%@@2x",name];
+    NSString *path = [[NSBundle bundleForClass:self.class] pathForResource:ZHBundleName(str) ofType:@"gif"];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    if (!data) {
+        return nil;
+    }
+    UIImage *animatedImage;
+    NSMutableArray *imageArray = [NSMutableArray arrayWithCapacity:5];
+    CGFloat duration = 0.0;
+    
+    CGImageSourceRef src = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
+    if (src) {
+        //获取gif的帧数
+        NSUInteger frameCount = CGImageSourceGetCount(src);
+        for (NSInteger i = 0; i < frameCount; i++) {
+            CGImageRef img = CGImageSourceCreateImageAtIndex(src, (size_t) i, NULL);
+            //把CGImage转化为UIImage
+            UIImage *frameImage = [UIImage imageWithCGImage:img];
+            [imageArray addObject:frameImage];
+            
+            CFDictionaryRef dictRef = CGImageSourceCopyPropertiesAtIndex(src, i, NULL);
+            NSDictionary *dict = (__bridge NSDictionary *)dictRef;
+            NSDictionary *gifDict = dict[(NSString *)kCGImagePropertyGIFDictionary];
+            CGFloat delayTime = [[gifDict objectForKey:(NSString *)kCGImagePropertyGIFDelayTime] floatValue];
+            duration += delayTime;
+            CGImageRelease(img);
+        }
+    }
+    CFRelease(src);
+    animatedImage = [UIImage animatedImageWithImages:imageArray duration:duration];
+    return animatedImage;
+
+}
+
 @end

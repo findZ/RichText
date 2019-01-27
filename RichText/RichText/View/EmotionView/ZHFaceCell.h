@@ -20,8 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZHFaceCell : UICollectionViewCell
 @property (nonatomic, weak) id<ZHFaceCellDelegate> delegate;
-@property (nonatomic,strong) ZHEmotion *emotion;
 @property (nonatomic,strong) UIImage *image;
+@property (nonatomic,strong) NSArray <ZHEmotion *>*faceArray;
 @end
 
 NS_ASSUME_NONNULL_END

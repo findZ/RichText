@@ -8,13 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class ZHEmotion;
+
 @protocol ZHEmotionsViewDelegate <NSObject>
 
-- (void)didSelectedEmotion:(NSString *)emotionString;
+- (void)didSelectedEmotion:(ZHEmotion *)emotion;
 - (void)didSelectSendButton:(UIButton *)sendButton;
 @end
 
 @interface ZHEmotionsView : UIView
 @property (nonatomic, weak) id<ZHEmotionsViewDelegate> delegate;
+- (void)reloadData;
 @end
 

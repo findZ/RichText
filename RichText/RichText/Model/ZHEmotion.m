@@ -44,4 +44,12 @@
     }
     return self;
 }
+
+- (void)setType:(ZHEmotionType)type
+{
+    _type = type;
+    if (type == ZHEmotionTypeDelete) {
+        self.image = [UIImage imageNamed:@"faceDelete"];
+    }
+}
 @end

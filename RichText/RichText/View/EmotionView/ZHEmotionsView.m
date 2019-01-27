@@ -10,54 +10,55 @@
 #import "ZHFaceCell.h"
 #import "ZHEmotionTool.h"
 #import "ZHEmotion.h"
+#import "ZHFacePreview.h"
 
 #define K_FaceViewHeight  216
 #define K_FaceViewWidth   [UIScreen mainScreen].bounds.size.width
 #define K_SendButtonHeight 60
+#define K_PageControlHeight 44
 
 @interface ZHEmotionsView ()<UIInputViewAudioFeedback,UICollectionViewDataSource, UICollectionViewDelegate, ZHFaceCellDelegate>
 @property (nonatomic, weak) UICollectionView *faceView;
 @property (nonatomic, weak) UIButton *sendButton;
-@property (nonatomic,strong) NSArray *dataArray;
-@property (nonatomic, weak) UIButton *preview;
-@property (nonatomic,assign) CGPoint startPoint;
+@property (nonatomic,strong) NSMutableArray *dataArray;
+@property (nonatomic, weak) UIPageControl *pageControl;
+
 @end
 
 @implementation ZHEmotionsView
+- (NSMutableArray *)dataArray
+{
+    if (!_dataArray) {
+        _dataArray = [NSMutableArray array];
+    }
+    return _dataArray;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        self.backgroundColor = [UIColor grayColor];
-        self.dataArray = [ZHEmotionTool sharedEmotionTool].defaultEmotions;
-
+        self.backgroundColor = [UIColor orangeColor];
         [self setupSubView];
+        [self loadData];
     }
     return self;
 }
 - (void)setupSubView
 {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    CGFloat width = (K_FaceViewWidth - 20)/8;
-    CGFloat height = K_FaceViewHeight/4;
-    flowLayout.itemSize = CGSizeMake(width, height);
+    flowLayout.itemSize = CGSizeMake(K_FaceViewWidth, K_FaceViewHeight - K_PageControlHeight);
     flowLayout.minimumLineSpacing = 0;
     flowLayout.minimumInteritemSpacing = 0;
-    flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5);
-    UICollectionView *faceView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, K_FaceViewWidth, K_FaceViewHeight) collectionViewLayout:flowLayout];
+    flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    UICollectionView *faceView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, K_FaceViewWidth, K_FaceViewHeight - K_PageControlHeight) collectionViewLayout:flowLayout];
     [faceView registerClass:[ZHFaceCell class] forCellWithReuseIdentifier:@"ZHFaceCell"];
     faceView.backgroundColor = [UIColor whiteColor];
     faceView.showsHorizontalScrollIndicator = NO;
+    faceView.pagingEnabled = YES;
     faceView.dataSource = self;
     faceView.delegate = self;
     [self addSubview:faceView];
     self.faceView = faceView;
-    
-    
-    UILongPressGestureRecognizer *longPR = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFace:)];
-    longPR.minimumPressDuration = 0.5;
-    [faceView addGestureRecognizer:longPR];
     
     
     CGFloat btnH = self.bounds.size.height - K_FaceViewHeight;
@@ -69,11 +70,14 @@
     [self addSubview:sendButton];
     self.sendButton = sendButton;
     
-    UIButton *preview = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 60)];
-    preview.hidden = YES;
-//    preview.backgroundColor = [UIColor redColor];
-    [self addSubview:preview];
-    self.preview = preview;
+
+    UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(faceView.frame), K_FaceViewWidth, K_PageControlHeight)];
+    pageControl.backgroundColor = [UIColor whiteColor];
+    pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
+    pageControl.currentPageIndicatorTintColor = [UIColor orangeColor];
+    pageControl.userInteractionEnabled = NO;
+    [self addSubview:pageControl];
+    self.pageControl = pageControl;
     
 }
 - (void)sendButtonClick:(UIButton *)btn
@@ -89,45 +93,6 @@
     return YES;
 }
 
-- (void)longPressFace:(UILongPressGestureRecognizer *)longPress
-{
-    CGPoint point = [longPress locationInView:longPress.view];
-    CGPoint center = CGPointMake(point.x, point.y - 40);
-    
-    for (UIView *subView in longPress.view.subviews) {//查找
-        if ([subView isKindOfClass:[ZHFaceCell class]]) {
-            if (CGRectContainsPoint(subView.frame, point)) {
-                ZHFaceCell *cell = (ZHFaceCell *)subView;
-                [self.preview setImage:cell.image forState:UIControlStateNormal];
-            }
-        }
-    }
-    
-    if (CGRectContainsPoint(self.faceView.frame, point)) {
-        self.preview.center = center;
-    }
-    
-//    NSLog(@"%@",NSStringFromCGPoint(point));
-    switch (longPress.state) {
-        case UIGestureRecognizerStateBegan:
-            self.preview.hidden = NO;
-            self.startPoint = center;
-            break;
-        case UIGestureRecognizerStateEnded:
-        {
-            [UIView animateWithDuration:0.25 animations:^{
-                self.preview.center = self.startPoint;
-            } completion:^(BOOL finished) {
-                self.preview.hidden = YES;
-            }];
-            
-        }
-            break;
-        default:
-            break;
-    }
-}
-
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -138,7 +103,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ZHFaceCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ZHFaceCell" forIndexPath:indexPath];
-    cell.emotion = self.dataArray[indexPath.row];
+    cell.faceArray = self.dataArray[indexPath.row];
     cell.delegate = self;
     return cell;
 }
@@ -147,13 +112,57 @@
 {
     
 }
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    // 得到每页宽度
+    CGFloat pageWidth = scrollView.frame.size.width;
+    // 根据当前的x坐标和页宽度计算出当前页数
+    int index = fabs(scrollView.contentOffset.x)/pageWidth;
+    self.pageControl.currentPage = index;
+}
 #pragma mark - ZHFaceCellDelegate
 - (void)didSelectedFaceButton:(UIButton *)faceBtn emotion:(ZHEmotion *)emotion
 {
     [[UIDevice currentDevice] playInputClick];
     if ([self.delegate respondsToSelector:@selector(didSelectedEmotion:)]) {
-        [self.delegate didSelectedEmotion:emotion.chs];
+        [self.delegate didSelectedEmotion:emotion];
         self.sendButton.enabled = YES;
     }
+}
+- (void)loadData
+{
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSArray *array = [ZHEmotionTool sharedEmotionTool].defaultEmotions;
+        NSMutableArray *totalArray = [NSMutableArray arrayWithArray:array];
+        while (totalArray.count) {
+            if(totalArray.count > 20){
+                NSIndexSet *indexset = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0,20)];
+                NSArray *tempArray = [totalArray objectsAtIndexes:indexset];
+                NSMutableArray *arrayM = [NSMutableArray arrayWithArray:tempArray];
+                ZHEmotion *delete = [[ZHEmotion alloc] init];
+                delete.type = ZHEmotionTypeDelete;
+                [arrayM addObject:delete];
+                [self.dataArray addObject:arrayM];
+                [totalArray removeObjectsInArray:tempArray];
+            }else{
+                NSIndexSet *indexset = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0,totalArray.count)];
+                NSArray *tempArray = [totalArray objectsAtIndexes:indexset];
+                NSMutableArray *arrayM = [NSMutableArray arrayWithArray:tempArray];
+                ZHEmotion *delete = [[ZHEmotion alloc] init];
+                delete.type = ZHEmotionTypeDelete;
+                [arrayM addObject:delete];
+                [self.dataArray addObject:arrayM];
+                [totalArray removeObjectsInArray:tempArray];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSInteger pages = self.dataArray.count;
+                    self.pageControl.numberOfPages = pages;
+                });
+            }
+        }
+    });
+}
+- (void)reloadData
+{
+    [self.faceView reloadData];
 }
 @end

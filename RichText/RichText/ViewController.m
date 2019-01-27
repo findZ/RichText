@@ -59,8 +59,8 @@
     ZHEmotion *emotionNormal = [ZHEmotionTool emotionWithDesc:@"[微笑]"];
     ZHEmotion *emotionSelected = [ZHEmotionTool emotionWithDesc:@"[可爱]"];
 
-    [faceBtn setImage:[UIImage imageNamed:emotionNormal.directory] forState:UIControlStateNormal];
-    [faceBtn setImage:[UIImage imageNamed:emotionSelected.directory] forState:UIControlStateSelected];
+    [faceBtn setImage:emotionNormal.image forState:UIControlStateNormal];
+    [faceBtn setImage:emotionSelected.image forState:UIControlStateSelected];
     
     [faceBtn addTarget:self action:@selector(faceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [toolBar addSubview:textView];
@@ -133,9 +133,13 @@
 }
 
 #pragma mark - ZHEmotionsViewDelegate
-- (void)didSelectedEmotion:(NSString *)emotionString
+- (void)didSelectedEmotion:(ZHEmotion *)emotion
 {
-    [self.textView appendingEmoticon:emotionString];
+    if (emotion.type == ZHEmotionTypeDelete) {
+        [self.textView deleteEmoticon];
+    }else{
+        [self.textView appendingEmoticon:emotion.chs];
+    }
 }
 - (void)didSelectSendButton:(UIButton *)sendButton
 {
