@@ -4,7 +4,7 @@
 <array>
 	<dict>
 		<key>gif</key>
-		<string></string>
+		<string>0</string>
 		<key>png</key>
 		<string>0fix</string>
 		<key>chs</key>
@@ -14,7 +14,7 @@
 	</dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>1</string>
         <key>png</key>
         <string>1fix</string>
         <key>chs</key>
@@ -24,7 +24,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>2</string>
         <key>png</key>
         <string>2fix</string>
         <key>chs</key>
@@ -34,7 +34,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>3</string>
         <key>png</key>
         <string>3fix</string>
         <key>chs</key>
@@ -44,7 +44,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>4</string>
         <key>png</key>
         <string>4fix</string>
         <key>chs</key>
@@ -54,7 +54,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>5</string>
         <key>png</key>
         <string>5fix</string>
         <key>chs</key>
@@ -64,7 +64,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>6</string>
         <key>png</key>
         <string>6fix</string>
         <key>chs</key>
@@ -74,7 +74,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>7</string>
         <key>png</key>
         <string>7fix</string>
         <key>chs</key>
@@ -84,7 +84,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>8</string>
         <key>png</key>
         <string>8fix</string>
         <key>chs</key>
@@ -94,7 +94,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>9</string>
         <key>png</key>
         <string>9fix</string>
         <key>chs</key>
@@ -104,17 +104,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
-        <key>png</key>
-        <string>9fix</string>
-        <key>chs</key>
-        <string>[大哭]</string>
-        <key>cht</key>
-        <string>[大哭]</string>
-    </dict>
-    <dict>
-        <key>gif</key>
-        <string></string>
+        <string>10</string>
         <key>png</key>
         <string>10fix</string>
         <key>chs</key>
@@ -124,7 +114,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>11</string>
         <key>png</key>
         <string>11fix</string>
         <key>chs</key>
@@ -134,7 +124,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>12</string>
         <key>png</key>
         <string>12fix</string>
         <key>chs</key>
@@ -144,7 +134,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>13</string>
         <key>png</key>
         <string>13fix</string>
         <key>chs</key>
@@ -154,7 +144,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>14</string>
         <key>png</key>
         <string>14fix</string>
         <key>chs</key>
@@ -164,7 +154,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>15</string>
         <key>png</key>
         <string>15fix</string>
         <key>chs</key>
@@ -174,7 +164,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>16</string>
         <key>png</key>
         <string>16fix</string>
         <key>chs</key>
@@ -184,7 +174,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>17</string>
         <key>png</key>
         <string>17fix</string>
         <key>chs</key>
@@ -194,7 +184,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>18</string>
         <key>png</key>
         <string>18fix</string>
         <key>chs</key>
@@ -204,7 +194,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>19</string>
         <key>png</key>
         <string>19fix</string>
         <key>chs</key>
@@ -214,7 +204,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>20</string>
         <key>png</key>
         <string>20fix</string>
         <key>chs</key>
@@ -224,7 +214,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>21</string>
         <key>png</key>
         <string>21fix</string>
         <key>chs</key>
@@ -234,7 +224,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>22</string>
         <key>png</key>
         <string>22fix</string>
         <key>chs</key>
@@ -244,7 +234,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>23</string>
         <key>png</key>
         <string>23fix</string>
         <key>chs</key>
@@ -254,7 +244,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>24</string>
         <key>png</key>
         <string>24fix</string>
         <key>chs</key>
@@ -264,7 +254,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>25</string>
         <key>png</key>
         <string>25fix</string>
         <key>chs</key>
@@ -274,7 +264,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>26</string>
         <key>png</key>
         <string>26fix</string>
         <key>chs</key>
@@ -284,7 +274,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>27</string>
         <key>png</key>
         <string>27fix</string>
         <key>chs</key>
@@ -294,7 +284,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>28</string>
         <key>png</key>
         <string>28fix</string>
         <key>chs</key>
@@ -304,7 +294,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>29</string>
         <key>png</key>
         <string>29fix</string>
         <key>chs</key>
@@ -314,7 +304,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>30</string>
         <key>png</key>
         <string>30fix</string>
         <key>chs</key>
@@ -324,7 +314,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>31</string>
         <key>png</key>
         <string>31fix</string>
         <key>chs</key>
@@ -334,7 +324,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>32</string>
         <key>png</key>
         <string>32fix</string>
         <key>chs</key>
@@ -344,7 +334,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>33</string>
         <key>png</key>
         <string>33fix</string>
         <key>chs</key>
@@ -354,7 +344,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>34</string>
         <key>png</key>
         <string>34fix</string>
         <key>chs</key>
@@ -364,7 +354,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>35</string>
         <key>png</key>
         <string>35fix</string>
         <key>chs</key>
@@ -374,7 +364,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>36</string>
         <key>png</key>
         <string>36fix</string>
         <key>chs</key>
@@ -384,7 +374,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>37</string>
         <key>png</key>
         <string>37fix</string>
         <key>chs</key>
@@ -394,7 +384,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>38</string>
         <key>png</key>
         <string>38fix</string>
         <key>chs</key>
@@ -404,7 +394,7 @@
     </dict>
     <dict>
         <key>gif</key>
-        <string></string>
+        <string>39</string>
         <key>png</key>
         <string>39fix</string>
         <key>chs</key>

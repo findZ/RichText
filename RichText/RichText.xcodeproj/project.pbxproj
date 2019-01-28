@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29300E7621FC3D420071660E /* ZHFaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29300E7521FC3D420071660E /* ZHFaceCell.m */; };
+		29300E7921FD9D1D0071660E /* ZHFacePreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 29300E7821FD9D1D0071660E /* ZHFacePreview.m */; };
 		29A0773121F851BE00ADDBE7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 29A0773021F851BE00ADDBE7 /* AppDelegate.m */; };
 		29A0773421F851BE00ADDBE7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29A0773321F851BE00ADDBE7 /* ViewController.m */; };
 		29A0773721F851BE00ADDBE7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29A0773521F851BE00ADDBE7 /* Main.storyboard */; };
@@ -47,6 +49,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		29300E7421FC3D420071660E /* ZHFaceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFaceCell.h; sourceTree = "<group>"; };
+		29300E7521FC3D420071660E /* ZHFaceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFaceCell.m; sourceTree = "<group>"; };
+		29300E7721FD9D1D0071660E /* ZHFacePreview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFacePreview.h; sourceTree = "<group>"; };
+		29300E7821FD9D1D0071660E /* ZHFacePreview.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFacePreview.m; sourceTree = "<group>"; };
 		29A0772C21F851BE00ADDBE7 /* RichText.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RichText.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29A0772F21F851BE00ADDBE7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		29A0773021F851BE00ADDBE7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -113,6 +119,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		29300E7121FC3CCF0071660E /* EmotionView */ = {
+			isa = PBXGroup;
+			children = (
+				29A077B021FAFC6D00ADDBE7 /* ZHEmotionsView.h */,
+				29A077B121FAFC6D00ADDBE7 /* ZHEmotionsView.m */,
+				29300E7421FC3D420071660E /* ZHFaceCell.h */,
+				29300E7521FC3D420071660E /* ZHFaceCell.m */,
+				29300E7721FD9D1D0071660E /* ZHFacePreview.h */,
+				29300E7821FD9D1D0071660E /* ZHFacePreview.m */,
+			);
+			path = EmotionView;
+			sourceTree = "<group>";
+		};
+		29300E7221FC3CEF0071660E /* InputView */ = {
+			isa = PBXGroup;
+			children = (
+				29A0778421F9AA3500ADDBE7 /* ZHTextView.h */,
+				29A0778521F9AA3500ADDBE7 /* ZHTextView.m */,
+			);
+			path = InputView;
+			sourceTree = "<group>";
+		};
+		29300E7321FC3D040071660E /* RichView */ = {
+			isa = PBXGroup;
+			children = (
+				29A0776F21F8585B00ADDBE7 /* ZHAttachmentView.h */,
+				29A0777021F8585B00ADDBE7 /* ZHAttachmentView.m */,
+				29A0776221F853F500ADDBE7 /* ZHRichView.h */,
+				29A0776321F853F500ADDBE7 /* ZHRichView.m */,
+			);
+			path = RichView;
+			sourceTree = "<group>";
+		};
 		29A0772321F851BE00ADDBE7 = {
 			isa = PBXGroup;
 			children = (
@@ -174,14 +213,9 @@
 		29A0776121F851FA00ADDBE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				29A0776F21F8585B00ADDBE7 /* ZHAttachmentView.h */,
-				29A0777021F8585B00ADDBE7 /* ZHAttachmentView.m */,
-				29A0776221F853F500ADDBE7 /* ZHRichView.h */,
-				29A0776321F853F500ADDBE7 /* ZHRichView.m */,
-				29A0778421F9AA3500ADDBE7 /* ZHTextView.h */,
-				29A0778521F9AA3500ADDBE7 /* ZHTextView.m */,
-				29A077B021FAFC6D00ADDBE7 /* ZHEmotionsView.h */,
-				29A077B121FAFC6D00ADDBE7 /* ZHEmotionsView.m */,
+				29300E7321FC3D040071660E /* RichView */,
+				29300E7221FC3CEF0071660E /* InputView */,
+				29300E7121FC3CCF0071660E /* EmotionView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -361,11 +395,13 @@
 				29A0777821F85ED700ADDBE7 /* ZHRichTextParser.m in Sources */,
 				29A0776821F854F400ADDBE7 /* ZHRichLink.m in Sources */,
 				29A0777B21F86A2600ADDBE7 /* ZHEmotionTool.m in Sources */,
+				29300E7621FC3D420071660E /* ZHFaceCell.m in Sources */,
 				29A0773F21F851C000ADDBE7 /* main.m in Sources */,
 				29A0777121F8585B00ADDBE7 /* ZHAttachmentView.m in Sources */,
 				29A0776421F853F500ADDBE7 /* ZHRichView.m in Sources */,
 				29A0777421F85A3800ADDBE7 /* ZHRegexResult.m in Sources */,
 				29A0776E21F8578700ADDBE7 /* ZHEmotion.m in Sources */,
+				29300E7921FD9D1D0071660E /* ZHFacePreview.m in Sources */,
 				29A0773121F851BE00ADDBE7 /* AppDelegate.m in Sources */,
 				29A0776B21F8573D00ADDBE7 /* ZHTextAttachment.m in Sources */,
 			);
@@ -548,7 +584,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.ZH.RichText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -566,7 +602,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.ZH.RichText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

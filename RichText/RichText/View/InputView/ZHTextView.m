@@ -33,14 +33,33 @@
         self.layer.cornerRadius = 5.0f;
         self.returnKeyType = UIReturnKeySend;
         self.enablesReturnKeyAutomatically = YES;
-        self.backgroundColor = [UIColor lightGrayColor];
         self.delegate = self;
+        if (@available(iOS 11.0, *)) {  // 只在iOS11及以上才有这个属性
+            self.textDragInteraction.enabled = NO;//关闭图片拖拽
+        }
         self.plainString = @"";
         
         [self addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
     }
     return self;
 }
+#pragma mark - 重写系统方法
+- (BOOL)becomeFirstResponder
+{
+    return [super becomeFirstResponder];
+}
+- (BOOL)resignFirstResponder
+{
+    BOOL isResign = [super resignFirstResponder];
+    if (isResign) {
+        self.inputView = nil;
+        if ([self.customDelegate respondsToSelector:@selector(textViewDidEndEditing:)]) {
+            [self.customDelegate textViewDidEndEditing:self];
+        }        
+    }
+    return isResign;
+}
+
 #pragma mark - UITextViewDelegate
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
@@ -86,6 +105,7 @@
         NSString *string = [self.textParser stringWithAttributedString:attributedText];
         pasteBoard.string = string;
         
+        
         NSMutableAttributedString *newAttributedText = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedText];
         [newAttributedText deleteCharactersInRange:self.selectedRange];
         self.attributedText = newAttributedText;
@@ -111,6 +131,9 @@
     }
     UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
     if (pasteBoard.string) {
+        // 记住当前的光标位置
+        NSRange selectedRange = self.selectedRange;
+        NSUInteger length = 0;
         if (@available(iOS 9.0, *)) {
             //处理黏贴富文本,例如：[大笑]
             NSAttributedString *subAttStr = [self.textParser attributedStringWithString:pasteBoard.string];
@@ -118,8 +141,12 @@
             [newAttributedText insertAttributedString:subAttStr atIndex:self.selectedRange.location];
             NSString *string = [self.textParser stringWithAttributedString:newAttributedText];
             self.plainString = string;
+            length = subAttStr.length;
         }
         self.attributedText = [self.textParser attributedStringWithInputString:self.plainString];
+        
+        // 重新设置光标
+        self.selectedRange = NSMakeRange(selectedRange.location+length, 0);
     }
     
 }
@@ -168,6 +195,26 @@
 }
 
 #pragma mark - 外部方法
+- (void)switchKeyboard:(ZHKeyboardType)keyboardType
+{
+    switch (keyboardType) {
+        case ZHKeyboardTypeDefualt:
+            self.inputView = nil;
+            break;
+        case ZHKeyboardTypeFace:
+            self.inputView = self.customKeyboardView;
+            break;
+        default:
+            
+            break;
+    }
+    [self reloadInputViews];
+    
+    if (!self.isFirstResponder) {
+        [self becomeFirstResponder];
+    }
+
+}
 - (void)appendingEmoticon:(NSString *)emoticon
 {
     if (emoticon) {
