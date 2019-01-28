@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol ZHFaceCellDelegate <NSObject>
 
 - (void)didSelectedFaceButton:(UIButton *)faceBtn emotion:(ZHEmotion *)emotion;
-
+- (void)longPressDeleteButton:(UIButton *)deleteButton;
 @end
 
 @interface ZHFaceCell : UICollectionViewCell

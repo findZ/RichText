@@ -47,6 +47,7 @@
 //        faceBtn.backgroundColor = [UIColor redColor];
 //        [faceBtn setTitle:[NSString stringWithFormat:@"%ld",(long)i] forState:UIControlStateNormal];
          [faceBtn addTarget:self action:@selector(faceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [faceBtn addTarget:self action:@selector(longPressButton:) forControlEvents:UIControlEventTouchDown];
         [self.contentView addSubview:faceBtn];
     }
     UILongPressGestureRecognizer *longPR = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFace:)];
@@ -79,6 +80,15 @@
     ZHEmotion *emotion = self.faceArray[btn.tag];
     if ([self.delegate respondsToSelector:@selector(didSelectedFaceButton:emotion:)]) {
         [self.delegate didSelectedFaceButton:btn emotion:emotion];
+    }
+}
+- (void)longPressButton:(UIButton *)btn
+{
+    ZHEmotion *emotion = self.faceArray[btn.tag];
+    if (emotion.type == ZHEmotionTypeDelete) {
+        if ([self.delegate respondsToSelector:@selector(longPressDeleteButton:)]) {
+            [self.delegate longPressDeleteButton:btn];
+        }
     }
 }
 - (void)longPressFace:(UILongPressGestureRecognizer *)longPress
