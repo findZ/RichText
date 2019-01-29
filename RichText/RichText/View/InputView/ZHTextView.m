@@ -92,7 +92,10 @@
 - (void)copy:(id)sender{
     
     UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
-    if (self.plainString) {
+    if (self.attributedText) {
+        NSAttributedString *attributedText = [self.attributedText attributedSubstringFromRange:self.selectedRange];
+        NSString *string = [self.textParser stringWithAttributedString:attributedText];
+        self.plainString = string;
         pasteBoard.string = self.plainString;
     }
     self.font = [UIFont systemFontOfSize:16];

@@ -40,7 +40,7 @@
 - (void)setupSubView
 {
     NSString *text = @"iOS[可爱][微笑]794412987@qq.com你好啊[惊讶]你好啊[惊讶]www.baidu.com[惊讶][惊讶][大哭]18255552287[害羞]啦啦啦啦啦[得意][敲打][再见]iOS[可爱][微笑]794412987@qq.com你好啊[惊讶]你好啊[惊讶]www.baidu.com[惊讶][惊讶][大哭]18255552287[害羞]啦啦啦啦啦[得意]";
-    ZHRichView *richView =  [[ZHRichView alloc] initWithFrame:CGRectMake(0, 20, K_ScreenSize.width, 100)];
+    ZHRichView *richView =  [[ZHRichView alloc] initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, K_ScreenSize.width, 100)];
     richView.delegate = self;
     richView.text = text;
     [self.view addSubview:richView];
@@ -94,7 +94,9 @@
 }
 - (BOOL)textView:(ZHTextView *)textView sendText:(NSString *)text
 {
-    self.richView.text = text;
+    if (text.length) {
+        self.richView.text = text;
+    }
     return YES;
 }
 - (void)textViewDidEndEditing:(ZHTextView *)textView
