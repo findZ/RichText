@@ -19,7 +19,6 @@
 
 @interface ZHEmotionsView ()<UIInputViewAudioFeedback,UICollectionViewDataSource, UICollectionViewDelegate, ZHFaceCellDelegate>
 @property (nonatomic, weak) UICollectionView *faceView;
-@property (nonatomic, weak) UIButton *sendButton;
 @property (nonatomic,strong) NSMutableArray *dataArray;
 @property (nonatomic, weak) UIPageControl *pageControl;
 
@@ -67,6 +66,9 @@
     sendButton.backgroundColor = [UIColor orangeColor];
     [sendButton addTarget:self action:@selector(sendButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [sendButton setTitle:@"发送" forState:UIControlStateNormal];
+    [sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [sendButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
+
     [self addSubview:sendButton];
     self.sendButton = sendButton;
     

@@ -43,7 +43,7 @@
 - (void)setEmotion:(ZHEmotion *)emotion
 {
     _emotion = emotion;
-    UIImage *image = [ZHEmotionTool animatedGIFWithName:emotion.gif];
+    UIImage *image = emotion.gifImage;
     self.imageView.image = image;
 }
 @end

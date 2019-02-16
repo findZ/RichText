@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) ZHEmotion *emotion;
 @property (nonatomic, strong) NSString *imageUrl;
 @property (nonatomic, strong) UIImage *originalImage;
+@property (nonatomic,strong) UIImage *gifImage;
+@property (nonatomic,assign) CGRect imageBounds;
+@property (nonatomic,assign) CGFloat height;
 @end
 
 NS_ASSUME_NONNULL_END

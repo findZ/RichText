@@ -155,10 +155,12 @@
 {
     NSMutableAttributedString *newAttributedString = [[NSMutableAttributedString alloc] init];
     NSRange range = NSMakeRange(0, attributedString.length);
+    CGFloat height = attributedString.size.height;
     [attributedString enumerateAttributesInRange:range options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
         if (attrs[ZHRichEmotion])
         {//拼接自定义表情
             ZHTextAttachment *attachment = [[ZHTextAttachment alloc] init];
+            attachment.height = height;
             ZHRegexResult *result = attrs[ZHRichEmotion];
             NSString *desc = result.string;
             attachment.emotion = [ZHEmotionTool emotionWithDesc:desc];
@@ -192,9 +194,7 @@
         switch (result.type) {
             case ZHRegexResultTypeEmotion:
             {
-                if ([ZHEmotionTool emotionWithDesc:result.string]) {
-                    [attributedText addAttribute:ZHRichEmotion value:result range:result.range];
-                }
+                [attributedText addAttribute:ZHRichEmotion value:result range:result.range];
             }
                 break;
             case ZHRegexResultTypeURL:
@@ -237,13 +237,12 @@
     [attributedText addAttribute:NSForegroundColorAttributeName value:self.defaultColor range:range];
     [attributedText addAttribute:NSFontAttributeName value:self.font range:range];
     
-    [emotionArray enumerateObjectsUsingBlock:^(ZHRegexResult *result, NSUInteger idx, BOOL * _Nonnull stop) {
+    for (ZHRegexResult *result in emotionArray) {
         if (result.type == ZHRegexResultTypeEmotion) {
-            if ([ZHEmotionTool emotionWithDesc:result.string]) {
-                [attributedText addAttribute:ZHRichEmotion value:result range:result.range];
-            }
+            [attributedText addAttribute:ZHRichEmotion value:result range:result.range];
         }
-    }];
+    }
+
     NSAttributedString *attributedString = [self sortAttributedString:attributedText];
 
     return attributedString;
@@ -258,7 +257,9 @@
         if (attrs[@"NSAttachment"]) {
             ZHTextAttachment *attachment = attrs[@"NSAttachment"];
             if ([attachment isKindOfClass:[ZHTextAttachment class]]) {
-                [string appendString:attachment.emotion.chs];
+                if (attachment.emotion.chs) {
+                    [string appendString:attachment.emotion.chs];                    
+                }
             }
         }else{
             NSAttributedString *subAttributedString = [attributedString attributedSubstringFromRange:range];

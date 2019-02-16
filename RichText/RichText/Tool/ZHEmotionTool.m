@@ -36,6 +36,8 @@ static ZHEmotionTool *_emotionTool;
             ZHEmotion *emotion = [[ZHEmotion alloc] init];
             [emotion setValuesForKeysWithDictionary:dict];
             emotion.directory = ZHBundleName(emotion.png);
+            UIImage *image = [ZHEmotionTool animatedGIFWithName:emotion.gif];
+            emotion.gifImage = image;
             emotion.image = [UIImage imageNamed:emotion.directory];
             [array addObject:emotion];
         }

@@ -268,7 +268,7 @@
 - (void)sendText
 {
     if ([self.customDelegate respondsToSelector:@selector(textView:sendText:)]) {
-        BOOL isSend = [self.customDelegate textView:self sendText:self.plainString];
+        BOOL isSend = [self.customDelegate textView:self sendText:self.attributedText];
         if (isSend) {
             self.text = nil;
             self.plainString = @"";

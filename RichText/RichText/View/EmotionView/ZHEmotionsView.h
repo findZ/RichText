@@ -18,6 +18,7 @@
 
 @interface ZHEmotionsView : UIView
 @property (nonatomic, weak) id<ZHEmotionsViewDelegate> delegate;
+@property (nonatomic, weak) UIButton *sendButton;
 - (void)reloadData;
 @end
 

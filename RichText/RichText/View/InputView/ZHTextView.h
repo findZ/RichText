@@ -21,7 +21,7 @@ typedef NS_OPTIONS(NSInteger, ZHKeyboardType){
 
 @optional
 - (void)textView:(ZHTextView *)textView contentHeightShouldChange:(CGFloat)contentHeight;
-- (BOOL)textView:(ZHTextView *)textView sendText:(NSString *)text;
+- (BOOL)textView:(ZHTextView *)textView sendText:(NSAttributedString *)text;
 - (void)textView:(ZHTextView *)textView changeText:(NSString *)text;
 - (BOOL)textViewShouldBeginEditing;
 - (void)textViewDidEndEditing:(ZHTextView *)textView;

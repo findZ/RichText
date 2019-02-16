@@ -24,6 +24,7 @@
 @property (nonatomic, weak) UIView *toolBar;
 @property (nonatomic, weak) ZHTextView *textView;
 @property (nonatomic, weak) UIButton *faceBtn;
+@property (nonatomic,weak) ZHEmotionsView *emotionsView;
 @end
 
 @implementation ViewController
@@ -52,6 +53,7 @@
     ZHEmotionsView *view = [[ZHEmotionsView alloc] initWithFrame:CGRectMake(0, 0, K_ScreenSize.width,260)];
     view.delegate = self;
     textView.customKeyboardView = view;
+    self.emotionsView = view;
     
     UIView *toolBar = [[UIView alloc] initWithFrame:CGRectMake(0, K_ScreenSize.height - K_ToolBarHeight, K_ScreenSize.width, K_ToolBarHeight)];
     toolBar.backgroundColor = [UIColor orangeColor];
@@ -92,10 +94,16 @@
 {
 
 }
-- (BOOL)textView:(ZHTextView *)textView sendText:(NSString *)text
+- (void)textView:(ZHTextView *)textView changeText:(NSString *)text
 {
     if (text.length) {
-        self.richView.text = text;
+        self.emotionsView.sendButton.enabled = YES;
+    }
+}
+- (BOOL)textView:(ZHTextView *)textView sendText:(NSAttributedString *)text
+{
+    if (text.length) {
+        self.richView.attributedText = text;
     }
     return YES;
 }

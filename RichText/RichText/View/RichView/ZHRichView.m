@@ -20,6 +20,29 @@
 #define K_RICH_STRING_CONTENT_MAX_WIDTH    self.bounds.size.width
 
 
+@interface ZHContentView : UITextView
+
+@end
+
+@implementation ZHContentView
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    if (self = [super initWithFrame:frame]) {
+        UIView *view = [self.textContainer valueForKey:@"_textView"];
+
+        view.tag = 1090;
+        // 修改左右内间距
+        self.textContainerInset = UIEdgeInsetsMake(0, -5, 0, -5);
+        self.editable = NO;
+        self.scrollEnabled = NO;
+        self.userInteractionEnabled = NO;
+        self.backgroundColor = [UIColor clearColor];
+    }
+    return self;
+}
+
+@end
+
 
 @interface ZHRichView ()
 @property (nonatomic, strong) ZHRichTextParser *textParser;
@@ -41,19 +64,31 @@
 {
     if (self = [super initWithFrame:frame]) {
         [self setupSubView];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageBoundsDone:) name:@"ZHTextAttachmentImageDone" object:nil];
     }
     return self;
 }
+#pragma mark - NSTextStorageDelegate
+- (void)textStorage:(NSTextStorage *)textStorage didProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta
+{
+}
+
+- (void)imageBoundsDone:(NSNotification *)not
+{
+    ZHTextAttachment *attachment = not.userInfo[@"ZHTextAttachment"];
+    CGRect frame = attachment.imageBounds;
+    frame.origin.y = frame.origin.y - attachment.height;
+    ZHAttachmentView *btn = [[ZHAttachmentView alloc] initWithFrame:frame];
+    btn.image = attachment.gifImage;
+    btn.originalImage = attachment.originalImage;
+    btn.tag = K_ATTACHMENT_TAG;
+    btn.urlString = attachment.imageUrl;
+    [btn addTarget:self action:@selector(imageBtnClick:)];
+    [self addSubview:btn];
+}
 - (void)setupSubView
 {
-    UITextView *textView = [[UITextView alloc] init];
-    // 修改左右内间距
-    textView.textContainerInset = UIEdgeInsetsMake(0, -5, 0, -5);
-    textView.editable = NO;
-    textView.scrollEnabled = NO;
-    textView.userInteractionEnabled = NO;
-    textView.backgroundColor = [UIColor clearColor];
-    
+    ZHContentView *textView = [[ZHContentView alloc] init];
     [self addSubview:textView];
     self.textView = textView;
     
@@ -87,7 +122,7 @@
 - (void)setAttributedText:(NSAttributedString *)attributedText{
     
     _attributedText = attributedText;
-    _textView.attributedText = attributedText;
+    _textView.attributedText = attributedText;    
     [self removeAllAttachment];
     self.selectLink = nil;
     
@@ -157,8 +192,9 @@
         if (attrs[@"NSAttachment"]){
             ZHTextAttachment *attachment = attrs[@"NSAttachment"];
             if (!attachment.emotion) {
-                ZHAttachmentView *btn = [[ZHAttachmentView alloc] initWithFrame:CGRectMake(0, btnY, attachment.bounds.size.width, attachment.bounds.size.height)];
-                btn.image = attachment.image;
+                ZHAttachmentView *btn = [[ZHAttachmentView alloc] initWithFrame:attachment.imageBounds];
+//                btn.image = attachment.gifImage;
+                btn.backgroundColor = [UIColor redColor];
                 btn.originalImage = attachment.originalImage;
                 btn.tag = K_ATTACHMENT_TAG;
                 btn.urlString = attachment.imageUrl;

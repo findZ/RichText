@@ -33,6 +33,8 @@ typedef NS_OPTIONS(NSUInteger, ZHEmotionType) {
 @property (nonatomic,copy) NSString *directory;
 /**表情图片*/
 @property (nonatomic,strong) UIImage *image;
+/**gif表情*/
+@property (nonatomic,strong) UIImage *gifImage;
 /**类型*/
 @property (nonatomic,assign) ZHEmotionType type;
 @end
