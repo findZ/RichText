@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2918E91E2276D56900903984 /* UIColor+ZHColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2918E91D2276D56900903984 /* UIColor+ZHColor.m */; };
 		29300E7621FC3D420071660E /* ZHFaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29300E7521FC3D420071660E /* ZHFaceCell.m */; };
 		29300E7921FD9D1D0071660E /* ZHFacePreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 29300E7821FD9D1D0071660E /* ZHFacePreview.m */; };
 		29A0773121F851BE00ADDBE7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 29A0773021F851BE00ADDBE7 /* AppDelegate.m */; };
@@ -49,6 +50,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2918E91C2276D56900903984 /* UIColor+ZHColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+ZHColor.h"; sourceTree = "<group>"; };
+		2918E91D2276D56900903984 /* UIColor+ZHColor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ZHColor.m"; sourceTree = "<group>"; };
 		29300E7421FC3D420071660E /* ZHFaceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFaceCell.h; sourceTree = "<group>"; };
 		29300E7521FC3D420071660E /* ZHFaceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFaceCell.m; sourceTree = "<group>"; };
 		29300E7721FD9D1D0071660E /* ZHFacePreview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFacePreview.h; sourceTree = "<group>"; };
@@ -244,6 +247,8 @@
 				29A0777721F85ED700ADDBE7 /* ZHRichTextParser.m */,
 				29A0777921F86A2600ADDBE7 /* ZHEmotionTool.h */,
 				29A0777A21F86A2600ADDBE7 /* ZHEmotionTool.m */,
+				2918E91C2276D56900903984 /* UIColor+ZHColor.h */,
+				2918E91D2276D56900903984 /* UIColor+ZHColor.m */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -391,6 +396,7 @@
 				29A0778921FAA89600ADDBE7 /* NSNull+ZH.m in Sources */,
 				29A0773421F851BE00ADDBE7 /* ViewController.m in Sources */,
 				29A077B221FAFC6D00ADDBE7 /* ZHEmotionsView.m in Sources */,
+				2918E91E2276D56900903984 /* UIColor+ZHColor.m in Sources */,
 				29A0778621F9AA3500ADDBE7 /* ZHTextView.m in Sources */,
 				29A0777821F85ED700ADDBE7 /* ZHRichTextParser.m in Sources */,
 				29A0776821F854F400ADDBE7 /* ZHRichLink.m in Sources */,

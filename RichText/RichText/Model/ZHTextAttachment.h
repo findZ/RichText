@@ -10,9 +10,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class ZHEmotion;
+@class ZHEmotion,ZHTextAttachment;
+
+@protocol ZHTextAttachmentDelegate <NSObject>
+
+- (void)imageBoundsDidSetup:(ZHTextAttachment *)textAttachment;
+
+@end
 
 @interface ZHTextAttachment : NSTextAttachment
+@property (nonatomic, weak) id<ZHTextAttachmentDelegate> delegate;
 @property (nonatomic, strong) ZHEmotion *emotion;
 @property (nonatomic, strong) NSString *imageUrl;
 @property (nonatomic, strong) UIImage *originalImage;

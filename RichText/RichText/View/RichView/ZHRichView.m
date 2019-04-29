@@ -28,9 +28,9 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        UIView *view = [self.textContainer valueForKey:@"_textView"];
-
-        view.tag = 1090;
+//        UIView *view = [self.textContainer valueForKey:@"_textView"];
+//
+//        view.tag = 1090;
         // 修改左右内间距
         self.textContainerInset = UIEdgeInsetsMake(0, -5, 0, -5);
         self.editable = NO;
@@ -44,7 +44,7 @@
 @end
 
 
-@interface ZHRichView ()
+@interface ZHRichView ()<ZHTextAttachmentDelegate>
 @property (nonatomic, strong) ZHRichTextParser *textParser;
 @property (nonatomic, weak) UITextView *textView;
 /**选中的*/
@@ -64,28 +64,13 @@
 {
     if (self = [super initWithFrame:frame]) {
         [self setupSubView];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageBoundsDone:) name:@"ZHTextAttachmentImageDone" object:nil];
     }
     return self;
 }
-#pragma mark - NSTextStorageDelegate
-- (void)textStorage:(NSTextStorage *)textStorage didProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta
+- (void)dealloc
 {
 }
 
-- (void)imageBoundsDone:(NSNotification *)not
-{
-    ZHTextAttachment *attachment = not.userInfo[@"ZHTextAttachment"];
-    CGRect frame = attachment.imageBounds;
-    frame.origin.y = frame.origin.y - attachment.height;
-    ZHAttachmentView *btn = [[ZHAttachmentView alloc] initWithFrame:frame];
-    btn.image = attachment.gifImage;
-    btn.originalImage = attachment.originalImage;
-    btn.tag = K_ATTACHMENT_TAG;
-    btn.urlString = attachment.imageUrl;
-    [btn addTarget:self action:@selector(imageBtnClick:)];
-    [self addSubview:btn];
-}
 - (void)setupSubView
 {
     ZHContentView *textView = [[ZHContentView alloc] init];
@@ -100,8 +85,8 @@
     
     [super layoutSubviews];
     _textView.frame = self.bounds;
-    
 }
+
 #pragma mark - seter
 - (void)setTextColor:(UIColor *)textColor
 {
@@ -121,16 +106,27 @@
 }
 - (void)setAttributedText:(NSAttributedString *)attributedText{
     
-    _attributedText = attributedText;
-    _textView.attributedText = attributedText;    
     [self removeAllAttachment];
+    _attributedText = attributedText;
+    _textView.attributedText = attributedText;
     self.selectLink = nil;
     
     _links = [self getAllLinks:attributedText];
     
     _attachments = [self getAllAttachment:attributedText];
 }
-
+#pragma mark - ZHTextAttachmentDelegate
+- (void)imageBoundsDidSetup:(ZHTextAttachment *)attachment
+{
+    CGRect frame = attachment.imageBounds;
+    frame.origin.y = frame.origin.y - attachment.height;
+    ZHAttachmentView *btn = [[ZHAttachmentView alloc] initWithFrame:frame];
+    btn.tag = K_ATTACHMENT_TAG;
+    btn.image = attachment.gifImage;
+    btn.originalImage = attachment.originalImage;
+    btn.urlString = attachment.imageUrl;
+    [self addSubview:btn];
+}
 #pragma mark - 内部方法
 - (NSArray *)getAllLinks:(NSAttributedString *)attributedString
 {
@@ -191,6 +187,7 @@
         
         if (attrs[@"NSAttachment"]){
             ZHTextAttachment *attachment = attrs[@"NSAttachment"];
+            attachment.delegate = self;
             if (!attachment.emotion) {
                 ZHAttachmentView *btn = [[ZHAttachmentView alloc] initWithFrame:attachment.imageBounds];
 //                btn.image = attachment.gifImage;
@@ -201,6 +198,19 @@
                 [btn addTarget:weakSelf action:@selector(imageBtnClick:)];
                 [weakSelf addSubview:btn];
             }
+            else{
+                CGRect frame = attachment.imageBounds;
+                if (frame.size.height) {
+                    frame.origin.y = frame.origin.y - attachment.height;
+                    ZHAttachmentView *btn = [[ZHAttachmentView alloc] initWithFrame:frame];
+                    btn.tag = K_ATTACHMENT_TAG;
+                    btn.image = attachment.gifImage;
+                    btn.originalImage = attachment.originalImage;
+                    btn.urlString = attachment.imageUrl;
+                    [self addSubview:btn];
+                }
+            }
+            [attachments addObject:attachment];
         }
     }];
     return attachments;

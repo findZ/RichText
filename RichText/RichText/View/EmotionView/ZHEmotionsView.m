@@ -11,6 +11,7 @@
 #import "ZHEmotionTool.h"
 #import "ZHEmotion.h"
 #import "ZHFacePreview.h"
+#import "UIColor+ZHColor.h"
 
 #define K_FaceViewHeight  216
 #define K_FaceViewWidth   [UIScreen mainScreen].bounds.size.width
@@ -36,7 +37,7 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        self.backgroundColor = [UIColor orangeColor];
+        self.backgroundColor = [UIColor lightTextColor];
         [self setupSubView];
         [self loadData];
     }
@@ -63,7 +64,7 @@
     CGFloat btnH = self.bounds.size.height - K_FaceViewHeight;
     CGFloat btnY = K_FaceViewHeight;
     UIButton *sendButton = [[UIButton alloc] initWithFrame:CGRectMake(K_FaceViewWidth - K_SendButtonHeight, btnY, K_SendButtonHeight, btnH)];
-    sendButton.backgroundColor = [UIColor orangeColor];
+    sendButton.backgroundColor = [UIColor ZHColorWithRed:46 green:123 blue:246];
     [sendButton addTarget:self action:@selector(sendButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [sendButton setTitle:@"发送" forState:UIControlStateNormal];
     [sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

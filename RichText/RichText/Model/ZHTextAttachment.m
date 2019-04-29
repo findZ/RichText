@@ -19,11 +19,11 @@
 }
 - (nullable UIImage *)imageForBounds:(CGRect)imageBounds textContainer:(nullable NSTextContainer *)textContainer characterIndex:(NSUInteger)charIndex
 {
-    self.imageBounds = imageBounds;
-    UIView *view = [textContainer valueForKey:@"_textView"];
-    if (view.tag == 1090) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ZHTextAttachmentImageDone" object:nil userInfo:@{@"ZHTextAttachment":self}];
+    if ([self.delegate respondsToSelector:@selector(imageBoundsDidSetup:)]) {
+        self.imageBounds = imageBounds;
+        [self.delegate imageBoundsDidSetup:self];
     }
     return self.image;
 }
+
 @end

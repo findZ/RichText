@@ -12,6 +12,7 @@
 #import "ZHEmotionTool.h"
 #import "ZHEmotion.h"
 #import "ZHEmotionsView.h"
+#import "UIColor+ZHColor.h"
 
 
 #define K_TextViewHeight 44
@@ -19,12 +20,13 @@
 #define K_ScreenSize  [UIScreen mainScreen].bounds.size
 
 
-@interface ViewController ()<ZHRichViewDelegate, ZHTextViewDelegate, ZHEmotionsViewDelegate>
-@property (nonatomic, weak) ZHRichView *richView;
+@interface ViewController ()<UITableViewDataSource,UITableViewDelegate,ZHRichViewDelegate, ZHTextViewDelegate, ZHEmotionsViewDelegate>
 @property (nonatomic, weak) UIView *toolBar;
 @property (nonatomic, weak) ZHTextView *textView;
 @property (nonatomic, weak) UIButton *faceBtn;
 @property (nonatomic,weak) ZHEmotionsView *emotionsView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *dataArray;
 @end
 
 @implementation ViewController
@@ -33,19 +35,18 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidHide:) name:UIKeyboardWillHideNotification object:nil];
-    
+    self.dataArray = [NSMutableArray array];
     // Do any additional setup after loading the view, typically from a nib.
     [self setupSubView];
     
 }
 - (void)setupSubView
 {
-    NSString *text = @"iOS[可爱][微笑]794412987@qq.com你好啊[惊讶]你好啊[惊讶]www.baidu.com[惊讶][惊讶][大哭]18255552287[害羞]啦啦啦啦啦[得意][敲打][再见]iOS[可爱][微笑]794412987@qq.com你好啊[惊讶]你好啊[惊讶]www.baidu.com[惊讶][惊讶][大哭]18255552287[害羞]啦啦啦啦啦[得意]";
-    ZHRichView *richView =  [[ZHRichView alloc] initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, K_ScreenSize.width, 100)];
-    richView.delegate = self;
-    richView.text = text;
-    [self.view addSubview:richView];
-    self.richView = richView;
+//    NSString *text = @"iOS[可爱][微笑]794412987@qq.com你好啊[惊讶]你好啊[惊讶]www.baidu.com[惊讶][惊讶][大哭]18255552287[害羞]啦啦啦啦啦[得意][敲打][再见]iOS[可爱][微笑]794412987@qq.com你好啊[惊讶]你好啊[惊讶]www.baidu.com[惊讶][惊讶][大哭]18255552287[害羞]啦啦啦啦啦[得意]";
+//    ZHRichView *richView =  [[ZHRichView alloc] initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, K_ScreenSize.width, 100)];
+//    richView.delegate = self;
+//    richView.text = text;
+//    self.tableView.tableHeaderView = richView;
     
     ZHTextView *textView = [[ZHTextView alloc] initWithFrame:CGRectMake(0, 2.5, K_ScreenSize.width - K_ToolBarHeight, K_TextViewHeight)];
     textView.customDelegate = self;
@@ -56,7 +57,7 @@
     self.emotionsView = view;
     
     UIView *toolBar = [[UIView alloc] initWithFrame:CGRectMake(0, K_ScreenSize.height - K_ToolBarHeight, K_ScreenSize.width, K_ToolBarHeight)];
-    toolBar.backgroundColor = [UIColor orangeColor];
+    toolBar.backgroundColor = [UIColor lightGrayColor];
     UIButton *faceBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(textView.frame), 0, K_ToolBarHeight, K_ToolBarHeight)];
     ZHEmotion *emotionNormal = [ZHEmotionTool emotionWithDesc:@"[微笑]"];
     ZHEmotion *emotionSelected = [ZHEmotionTool emotionWithDesc:@"[可爱]"];
@@ -72,7 +73,35 @@
     self.textView = textView;
     self.faceBtn = faceBtn;
 }
-
+#pragma mark - UITableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.dataArray.count;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellId = @"cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        ZHRichView *richView = [[ZHRichView alloc] initWithFrame:cell.bounds];
+        richView.tag = 110;
+        richView.delegate = self;
+        [cell.contentView addSubview:richView];
+    }
+    ZHRichView *richView = (ZHRichView *)[cell.contentView viewWithTag:110];
+    richView.attributedText = self.dataArray[indexPath.row];
+    return cell;
+}
+#pragma mark - UITableViewDataDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50;
+}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.textView endEditing:YES];
+}
 #pragma mark - ZHRichViewDelegate
 - (void)didClickLinkWithUrlString:(NSString *)urlString
 {
@@ -103,7 +132,8 @@
 - (BOOL)textView:(ZHTextView *)textView sendText:(NSAttributedString *)text
 {
     if (text.length) {
-        self.richView.attributedText = text;
+        [self.dataArray addObject:text];
+        [self.tableView reloadData];
     }
     return YES;
 }
@@ -128,7 +158,7 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self.view endEditing:YES];
+    [self.tableView endEditing:YES];
 }
 
 - (void)faceBtnClick:(UIButton *)btn
