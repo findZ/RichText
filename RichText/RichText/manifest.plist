@@ -11,19 +11,19 @@
 					<key>kind</key>
 					<string>software-package</string>
 					<key>url</key>
-					<string>https://f.chuangcache.com/f/17cf02d218a84a0bb006/vClass.ipa</string>
+					<string>https://github.com/findZ/RichText/raw/master/RichText/RichText/vClass.ipa</string>
 				</dict>
 				<dict>
 					<key>kind</key>
 					<string>display-image</string>
 					<key>url</key>
-					<string>https://f.chuangcache.com/f/cb1e7813a96b4319944d/?dl=1</string>
+					<string>https://github.com/findZ/RichText/raw/master/RichText/RichText/57x57.png</string>
 				</dict>
 				<dict>
 					<key>kind</key>
 					<string>full-size-image</string>
 					<key>url</key>
-					<string>https://f.chuangcache.com/f/a878f487c62e4d119586/?dl=1</string>
+					<string>https://github.com/findZ/RichText/raw/master/RichText/RichText/512x512.png</string>
 				</dict>
 			</array>
 			<key>metadata</key>
